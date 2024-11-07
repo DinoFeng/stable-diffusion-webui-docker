@@ -30,6 +30,9 @@ services:
     image: sd-auto:78
     environment:
       - CLI_ARGS=--allow-code --medvram --xformers --enable-insecure-extension-access --api
+      - HF_ENDPOINT=https://hf-mirror.com
+      - HUGGINGFACE_HUB_CACHE=/data/huggingface
+      - TRANSFORMERS_CACHE=/data/huggingface
 
   auto-cpu:
     <<: *automatic
@@ -43,9 +46,13 @@ services:
     profiles: ["comfy"]
     build: ./services/comfy/
     image: sd-comfy:7
+    ports:
+      - "7878:7860"
     environment:
       - CLI_ARGS=
-
+      - HF_ENDPOINT=https://hf-mirror.com
+      - HUGGINGFACE_HUB_CACHE=/data/huggingface
+      - TRANSFORMERS_CACHE=/data/huggingface
 
   comfy-cpu:
     <<: *comfy
